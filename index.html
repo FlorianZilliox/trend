@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="fr" data-palette="sauge" data-theme="light" data-density="normal">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tendances par Quarter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* ============================================
+           DESIGN TOKENS
+           ============================================ */
+        :root {
+            /* Surfaces */
+            --paper: #fafaf7;
+            --paper-2: #f3f1ea;
+            --paper-3: #e9e5d9;
+
+            /* Encre */
+            --ink: #1a1a17;
+            --ink-2: #3a3a34;
+            --ink-3: #6b6b62;
+            --ink-mute: #9a9a8e;
+
+            /* Lignes */
+            --line: #2a2a26;
+            --line-soft: #d8d3c4;
+            --line-hair: #ebe7da;
+
+            /* Accents */
+            --sage: #6b8559;
+            --sage-2: #9bb38a;
+            --sage-soft: #dee5d4;
+            --forest: #2a3e2d;
+            --amber: #c9a47a;
+            --amber-soft: #ecddc7;
+            --ochre: #a8865c;
+            --rust: #b07564;
+            --rust-soft: #e8d3ca;
+            --plum: #8a6e7e;
+            --plum-soft: #ddd0d6;
+            --sky: #8499ad;
+            --sky-soft: #d6dde4;
+
+            /* Couleurs graphiques */
+            --chart-color-1: #6b8559;
+            --chart-color-2: #c9a47a;
+            --chart-color-3: #b07564;
+            --chart-color-4: #8a6e7e;
+            --chart-color-5: #8499ad;
+            --chart-color-6: #9bb38a;
+
+            /* Typographie */
+            --font-display: "Fraunces", "Iowan Old Style", Georgia, serif;
+            --font-body: "Inter", -apple-system, system-ui, sans-serif;
+            --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+            /* Tailles */
+            --font-size-xs: 0.75rem;
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.25rem;
+            --font-size-2xl: 1.5rem;
+            --font-size-3xl: 1.875rem;
+
+            /* Espacement */
+            --spacing-4: 1rem;
+            --spacing-6: 1.5rem;
+            --spacing-8: 2rem;
+
+            /* Arrondis */
+            --radius-lg: 10px;
+
+            /* Ombres */
+            --shadow-card: 0 1px 3px rgba(0,0,0,0.04);
+            --shadow-card-hover: 0 4px 12px rgba(0,0,0,0.08);
+
+            /* Transitions */
+            --transition-normal: 200ms;
+        }
+
+        /* Mode sombre */
+        [data-theme="dark"] {
+            --paper: #14140f;
+            --paper-2: #1c1c17;
+            --paper-3: #25251f;
+            --ink: #f0ebda;
+            --ink-2: #d4cfbe;
+            --ink-3: #9a9a8e;
+            --ink-mute: #6b6b62;
+            --line: #f0ebda;
+            --line-soft: #3a3a32;
+            --line-hair: #2a2a24;
+            --sage-soft: #2c3a25;
+            --amber-soft: #3d2f1a;
+            --rust-soft: #3a201a;
+            --plum-soft: #2e1f29;
+            --sky-soft: #1f2a36;
+        }
+
+        /* ============================================
+           BASE
+           ============================================ */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--paper);
+            color: var(--ink);
+            padding: var(--spacing-8);
+            line-height: 1.5;
+        }
+
+        /* ============================================
+           TYPOGRAPHIE EDITORIALE
+           ============================================ */
+        .h-display {
+            font-family: var(--font-display);
+            font-size: var(--font-size-3xl);
+            font-weight: 600;
+            color: var(--ink);
+            line-height: 1.2;
+            margin-bottom: 0.25rem;
+        }
+
+        .h-section {
+            font-family: var(--font-display);
+            font-size: var(--font-size-xl);
+            font-weight: 600;
+            color: var(--ink);
+            margin: var(--spacing-8) 0 var(--spacing-4);
+        }
+
+        .kicker {
+            font-family: var(--font-display);
+            font-style: italic;
+            font-size: var(--font-size-sm);
+            color: var(--ink-3);
+            margin-bottom: var(--spacing-6);
+        }
+
+        .eyebrow {
+            font-family: var(--font-mono);
+            font-size: 10.5px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--ink-3);
+            margin-bottom: 0.5rem;
+        }
+
+        .mono {
+            font-family: var(--font-mono);
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* ============================================
+           LAYOUT
+           ============================================ */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(460px, 1fr));
+            gap: var(--spacing-6);
+            margin-bottom: var(--spacing-8);
+        }
+
+        /* ============================================
+           COMPOSANTS
+           ============================================ */
+        .chart-box {
+            background: var(--paper-2);
+            border: 1px solid var(--line-soft);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-6);
+            box-shadow: var(--shadow-card);
+            transition: box-shadow var(--transition-normal) ease;
+        }
+
+        .chart-box:hover {
+            box-shadow: var(--shadow-card-hover);
+        }
+
+        .chart-box__title {
+            font-family: var(--font-display);
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--ink);
+            margin-bottom: var(--spacing-4);
+        }
+
+        canvas {
+            max-height: 280px;
+        }
+
+        /* ============================================
+           TABLEAU
+           ============================================ */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--paper-2);
+            border: 1px solid var(--line-soft);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            font-size: var(--font-size-sm);
+        }
+
+        th, td {
+            padding: 0.625rem 0.875rem;
+            text-align: center;
+            border-bottom: 1px solid var(--line-hair);
+        }
+
+        th {
+            background: var(--paper-3);
+            color: var(--ink);
+            font-weight: 600;
+            font-family: var(--font-body);
+        }
+
+        td {
+            font-family: var(--font-mono);
+            font-size: var(--font-size-xs);
+            color: var(--ink-2);
+        }
+
+        td.team-name {
+            text-align: left;
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: var(--font-size-sm);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: var(--paper-3);
+        }
+
+        /* ============================================
+           LEGENDE CUSTOM
+           ============================================ */
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: var(--spacing-4) 0 var(--spacing-6);
+            justify-content: center;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: var(--font-size-sm);
+            color: var(--ink-2);
+        }
+
+        .legend-color {
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 992px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            body {
+                padding: var(--spacing-4);
+            }
+            .h-display {
+                font-size: var(--font-size-2xl);
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1 class="h-display">Tendances par Quarter</h1>
+    <p class="kicker">Evolution des metriques de Q4 2025 a Q2 2026</p>
+
+    <div class="charts-grid">
+        <div class="chart-box">
+            <div class="eyebrow">Completion</div>
+            <div class="chart-box__title">Taux de Completion (%)</div>
+            <canvas id="completionChart"></canvas>
+        </div>
+        <div class="chart-box">
+            <div class="eyebrow">Volume</div>
+            <div class="chart-box__title">Throughput (tickets/sprint)</div>
+            <canvas id="throughputChart"></canvas>
+        </div>
+        <div class="chart-box">
+            <div class="eyebrow">Velocite</div>
+            <div class="chart-box__title">Cycle Time (jours)</div>
+            <canvas id="cycleTimeChart"></canvas>
+        </div>
+    </div>
+
+    <h2 class="h-section">Donnees detaillees</h2>
+    <table>
+        <thead>
+            <tr><th>Equipe</th><th colspan="3">Q4 2025</th><th colspan="3">Q1 2026</th><th colspan="3">Q2 2026</th></tr>
+            <tr><th></th><th>Compl.</th><th>Thrpt</th><th>CT</th><th>Compl.</th><th>Thrpt</th><th>CT</th><th>Compl.</th><th>Thrpt</th><th>CT</th></tr>
+        </thead>
+        <tbody>
+            <tr><td class="team-name" style="color: var(--chart-color-1)">Automatiser</td><td>82%</td><td>10.5</td><td>4.2j</td><td>87%</td><td>15.6</td><td>3.9j</td><td>91%</td><td>13</td><td>3.7j</td></tr>
+            <tr><td class="team-name" style="color: var(--chart-color-2)">Engager</td><td>85%</td><td>9.2</td><td>4.0j</td><td>83%</td><td>15.1</td><td>2.8j</td><td>67%</td><td>13.5</td><td>1.0j</td></tr>
+            <tr><td class="team-name" style="color: var(--chart-color-3)">Exposer</td><td>73%</td><td>14.2</td><td>3.1j</td><td>88%</td><td>16.3</td><td>1.0j</td><td>84%</td><td>14.2</td><td>2.8j</td></tr>
+            <tr><td class="team-name" style="color: var(--chart-color-4)">IAML</td><td>60%</td><td>20.3</td><td>3.2j</td><td>55%</td><td>21.4</td><td>4.0j</td><td>54%</td><td>22.2</td><td>2.3j</td></tr>
+            <tr><td class="team-name" style="color: var(--chart-color-5)">Monetiser</td><td>78%</td><td>21.3</td><td>3.0j</td><td>88%</td><td>21.6</td><td>2.5j</td><td>94%</td><td>15</td><td>2.9j</td></tr>
+            <tr><td class="team-name" style="color: var(--chart-color-6)">Stack Data</td><td>68%</td><td>82</td><td>2.0j</td><td>60%</td><td>88.6</td><td>1.9j</td><td>58%</td><td>87.5</td><td>1.0j</td></tr>
+        </tbody>
+    </table>
+
+    <script>
+        const labels = ["Q4 2025", "Q1 2026", "Q2 2026"];
+
+        // Palette du design system
+        const colors = {
+            sage: '#6b8559',
+            amber: '#c9a47a',
+            rust: '#b07564',
+            plum: '#8a6e7e',
+            sky: '#8499ad',
+            sage2: '#9bb38a'
+        };
+
+        // Detecter le theme
+        const isDark = document.documentElement.dataset.theme === 'dark';
+        const gridColor = isDark ? '#3a3a32' : '#ebe7da';
+        const textColor = isDark ? '#d4cfbe' : '#6b6b62';
+
+        const chartOptions = {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'bottom',
+                    labels: {
+                        color: textColor,
+                        usePointStyle: true,
+                        pointStyle: 'circle',
+                        padding: 16,
+                        font: {
+                            family: "'Inter', sans-serif",
+                            size: 12
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: gridColor },
+                    ticks: {
+                        color: textColor,
+                        font: { family: "'JetBrains Mono', monospace", size: 11 }
+                    }
+                },
+                x: {
+                    grid: { color: gridColor },
+                    ticks: {
+                        color: textColor,
+                        font: { family: "'Inter', sans-serif", size: 12 }
+                    }
+                }
+            }
+        };
+
+        new Chart(document.getElementById('completionChart'), {
+            type: 'line',
+            data: { labels, datasets: [
+                {label: "Automatiser", data: [82, 87, 91], borderColor: colors.sage, backgroundColor: colors.sage + '20', tension: 0.3, fill: false, borderWidth: 2},
+                {label: "Engager", data: [85, 83, 67], borderColor: colors.amber, backgroundColor: colors.amber + '20', tension: 0.3, fill: false, borderWidth: 2},
+                {label: "Exposer", data: [73, 88, 84], borderColor: colors.rust, backgroundColor: colors.rust + '20', tension: 0.3, fill: false, borderWidth: 2},
+                {label: "IAML", data: [60, 55, 54], borderColor: colors.plum, backgroundColor: colors.plum + '20', tension: 0.3, fill: false, borderWidth: 2},
+                {label: "Monetiser", data: [78, 88, 94], borderColor: colors.sky, backgroundColor: colors.sky + '20', tension: 0.3, fill: false, borderWidth: 2},
+                {label: "Stack Data", data: [68, 60, 58], borderColor: colors.sage2, backgroundColor: colors.sage2 + '20', tension: 0.3, fill: false, borderWidth: 2}
+            ]},
+            options: {
+                ...chartOptions,
+                scales: {
+                    ...chartOptions.scales,
+                    y: { ...chartOptions.scales.y, max: 100 }
+                }
+            }
+        });
+
+        new Chart(document.getElementById('throughputChart'), {
+            type: 'line',
+            data: { labels, datasets: [
+                {label: "Automatiser", data: [10.5, 15.6, 13], borderColor: colors.sage, backgroundColor: colors.sage + '20', tension: 0.3, fill: false, borderWidth: 2},
+                {label: "Engager", data: [9.2, 15.1, 13.5], borderColor: colors.amber, backgroundColor: colors.amber + '20', tension: 0.3, fill: false, borderWidth: 2},
+                {label: "Exposer", data: [14.2, 16.3, 14.2], borderColor: colors.rust, backgroundColor: colors.rust + '20', tension: 0.3, fill: false, borderWidth: 2},
+                {label: "IAML", data: [20.3, 21.4, 22.2], borderColor: colors.plum, backgroundColor: colors.plum + '20', tension: 0.3, fill: false, borderWidth: 2},
+                {label: "Monetiser", data: [21.3, 21.6, 15], borderColor: colors.sky, backgroundColor: colors.sky + '20', tension: 0.3, fill: false, borderWidth: 2},
+                {label: "Stack Data", data: [82, 88.6, 87.5], borderColor: colors.sage2, backgroundColor: colors.sage2 + '20', tension: 0.3, fill: false, borderWidth: 2}
+            ]},
+            options: chartOptions
+        });
+
+        new Chart(document.getElementById('cycleTimeChart'), {
+            type: 'line',
+            data: { labels, datasets: [
+                {label: "Automatiser", data: [4.2, 3.9, 3.7], borderColor: colors.sage, backgroundColor: colors.sage + '20', tension: 0.3, fill: false, borderWidth: 2},
+                {label: "Engager", data: [4.0, 2.8, 1.0], borderColor: colors.amber, backgroundColor: colors.amber + '20', tension: 0.3, fill: false, borderWidth: 2},
+                {label: "Exposer", data: [3.1, 1.0, 2.8], borderColor: colors.rust, backgroundColor: colors.rust + '20', tension: 0.3, fill: false, borderWidth: 2},
+                {label: "IAML", data: [3.2, 4.0, 2.3], borderColor: colors.plum, backgroundColor: colors.plum + '20', tension: 0.3, fill: false, borderWidth: 2},
+                {label: "Monetiser", data: [3.0, 2.5, 2.9], borderColor: colors.sky, backgroundColor: colors.sky + '20', tension: 0.3, fill: false, borderWidth: 2},
+                {label: "Stack Data", data: [2.0, 1.9, 1.0], borderColor: colors.sage2, backgroundColor: colors.sage2 + '20', tension: 0.3, fill: false, borderWidth: 2}
+            ]},
+            options: chartOptions
+        });
+    </script>
+</body>
+</html>
