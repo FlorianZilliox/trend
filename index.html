@@ -312,12 +312,12 @@
             <tr><th></th><th>Compl.</th><th>Thrpt</th><th>CT</th><th>Compl.</th><th>Thrpt</th><th>CT</th><th>Compl.</th><th>Thrpt</th><th>CT</th></tr>
         </thead>
         <tbody>
-            <tr><td class="team-name" style="color: var(--chart-color-1)">Automatiser</td><td>82%</td><td>10.5</td><td>4.2j</td><td>87%</td><td>15.6</td><td>3.9j</td><td>91%</td><td>13</td><td>3.7j</td></tr>
-            <tr><td class="team-name" style="color: var(--chart-color-2)">Engager</td><td>85%</td><td>9.2</td><td>4.0j</td><td>83%</td><td>15.1</td><td>2.8j</td><td>67%</td><td>13.5</td><td>1.0j</td></tr>
-            <tr><td class="team-name" style="color: var(--chart-color-3)">Exposer</td><td>73%</td><td>14.2</td><td>3.1j</td><td>88%</td><td>16.3</td><td>1.0j</td><td>84%</td><td>14.2</td><td>2.8j</td></tr>
-            <tr><td class="team-name" style="color: var(--chart-color-4)">IAML</td><td>60%</td><td>20.3</td><td>3.2j</td><td>55%</td><td>21.4</td><td>4.0j</td><td>54%</td><td>22.2</td><td>2.3j</td></tr>
-            <tr><td class="team-name" style="color: var(--chart-color-5)">Monetiser</td><td>78%</td><td>21.3</td><td>3.0j</td><td>88%</td><td>21.6</td><td>2.5j</td><td>94%</td><td>15</td><td>2.9j</td></tr>
-            <tr><td class="team-name" style="color: var(--chart-color-6)">Stack Data</td><td>68%</td><td>82</td><td>2.0j</td><td>60%</td><td>88.6</td><td>1.9j</td><td>58%</td><td>87.5</td><td>1.0j</td></tr>
+            <tr><td class="team-name" style="color: var(--chart-color-1)">Automatiser</td><td>82%</td><td>10.5</td><td>4.2j</td><td>87%</td><td>15.6</td><td>3.9j</td><td>94%</td><td>13</td><td>3.7j</td></tr>
+            <tr><td class="team-name" style="color: var(--chart-color-2)">Engager</td><td>85%</td><td>9.2</td><td>4.0j</td><td>83%</td><td>15.1</td><td>2.8j</td><td>66%</td><td>13.5</td><td>1.0j</td></tr>
+            <tr><td class="team-name" style="color: var(--chart-color-3)">Exposer</td><td>73%</td><td>14.2</td><td>3.1j</td><td>88%</td><td>16.3</td><td>1.7j</td><td>84%</td><td>14.2</td><td>2.8j</td></tr>
+            <tr><td class="team-name" style="color: var(--chart-color-4)">Personnaliser</td><td>60%</td><td>20.3</td><td>3.2j</td><td>55%</td><td>21.4</td><td>5.0j</td><td>54%</td><td>22.2</td><td>2.3j</td></tr>
+            <tr><td class="team-name" style="color: var(--chart-color-5)">Monetiser</td><td>78%</td><td>21.3</td><td>3.0j</td><td>88%</td><td>21.6</td><td>2.8j</td><td>93%</td><td>15</td><td>2.9j</td></tr>
+            <tr><td class="team-name" style="color: var(--chart-color-6)">Stack Data</td><td>68%</td><td>82</td><td>2.0j</td><td>60%</td><td>88.6</td><td>2.5j</td><td>60%</td><td>87.5</td><td>1.0j</td></tr>
         </tbody>
     </table>
 
@@ -380,12 +380,12 @@
         new Chart(document.getElementById('completionChart'), {
             type: 'line',
             data: { labels, datasets: [
-                {label: "Automatiser", data: [82, 87, 91], borderColor: colors.sage, backgroundColor: colors.sage + '20', tension: 0.3, fill: false, borderWidth: 2},
-                {label: "Engager", data: [85, 83, 67], borderColor: colors.amber, backgroundColor: colors.amber + '20', tension: 0.3, fill: false, borderWidth: 2},
+                {label: "Automatiser", data: [82, 87, 94], borderColor: colors.sage, backgroundColor: colors.sage + '20', tension: 0.3, fill: false, borderWidth: 2},
+                {label: "Engager", data: [85, 83, 66], borderColor: colors.amber, backgroundColor: colors.amber + '20', tension: 0.3, fill: false, borderWidth: 2},
                 {label: "Exposer", data: [73, 88, 84], borderColor: colors.rust, backgroundColor: colors.rust + '20', tension: 0.3, fill: false, borderWidth: 2},
-                {label: "IAML", data: [60, 55, 54], borderColor: colors.plum, backgroundColor: colors.plum + '20', tension: 0.3, fill: false, borderWidth: 2},
-                {label: "Monetiser", data: [78, 88, 94], borderColor: colors.sky, backgroundColor: colors.sky + '20', tension: 0.3, fill: false, borderWidth: 2},
-                {label: "Stack Data", data: [68, 60, 58], borderColor: colors.sage2, backgroundColor: colors.sage2 + '20', tension: 0.3, fill: false, borderWidth: 2}
+                {label: "Personnaliser", data: [60, 55, 54], borderColor: colors.plum, backgroundColor: colors.plum + '20', tension: 0.3, fill: false, borderWidth: 2},
+                {label: "Monetiser", data: [78, 88, 93], borderColor: colors.sky, backgroundColor: colors.sky + '20', tension: 0.3, fill: false, borderWidth: 2},
+                {label: "Stack Data", data: [68, 60, 60], borderColor: colors.sage2, backgroundColor: colors.sage2 + '20', tension: 0.3, fill: false, borderWidth: 2}
             ]},
             options: {
                 ...chartOptions,
@@ -402,7 +402,7 @@
                 {label: "Automatiser", data: [10.5, 15.6, 13], borderColor: colors.sage, backgroundColor: colors.sage + '20', tension: 0.3, fill: false, borderWidth: 2},
                 {label: "Engager", data: [9.2, 15.1, 13.5], borderColor: colors.amber, backgroundColor: colors.amber + '20', tension: 0.3, fill: false, borderWidth: 2},
                 {label: "Exposer", data: [14.2, 16.3, 14.2], borderColor: colors.rust, backgroundColor: colors.rust + '20', tension: 0.3, fill: false, borderWidth: 2},
-                {label: "IAML", data: [20.3, 21.4, 22.2], borderColor: colors.plum, backgroundColor: colors.plum + '20', tension: 0.3, fill: false, borderWidth: 2},
+                {label: "Personnaliser", data: [20.3, 21.4, 22.2], borderColor: colors.plum, backgroundColor: colors.plum + '20', tension: 0.3, fill: false, borderWidth: 2},
                 {label: "Monetiser", data: [21.3, 21.6, 15], borderColor: colors.sky, backgroundColor: colors.sky + '20', tension: 0.3, fill: false, borderWidth: 2},
                 {label: "Stack Data", data: [82, 88.6, 87.5], borderColor: colors.sage2, backgroundColor: colors.sage2 + '20', tension: 0.3, fill: false, borderWidth: 2}
             ]},
@@ -414,10 +414,10 @@
             data: { labels, datasets: [
                 {label: "Automatiser", data: [4.2, 3.9, 3.7], borderColor: colors.sage, backgroundColor: colors.sage + '20', tension: 0.3, fill: false, borderWidth: 2},
                 {label: "Engager", data: [4.0, 2.8, 1.0], borderColor: colors.amber, backgroundColor: colors.amber + '20', tension: 0.3, fill: false, borderWidth: 2},
-                {label: "Exposer", data: [3.1, 1.0, 2.8], borderColor: colors.rust, backgroundColor: colors.rust + '20', tension: 0.3, fill: false, borderWidth: 2},
-                {label: "IAML", data: [3.2, 4.0, 2.3], borderColor: colors.plum, backgroundColor: colors.plum + '20', tension: 0.3, fill: false, borderWidth: 2},
-                {label: "Monetiser", data: [3.0, 2.5, 2.9], borderColor: colors.sky, backgroundColor: colors.sky + '20', tension: 0.3, fill: false, borderWidth: 2},
-                {label: "Stack Data", data: [2.0, 1.9, 1.0], borderColor: colors.sage2, backgroundColor: colors.sage2 + '20', tension: 0.3, fill: false, borderWidth: 2}
+                {label: "Exposer", data: [3.1, 1.7, 2.8], borderColor: colors.rust, backgroundColor: colors.rust + '20', tension: 0.3, fill: false, borderWidth: 2},
+                {label: "Personnaliser", data: [3.2, 5.0, 2.3], borderColor: colors.plum, backgroundColor: colors.plum + '20', tension: 0.3, fill: false, borderWidth: 2},
+                {label: "Monetiser", data: [3.0, 2.8, 2.9], borderColor: colors.sky, backgroundColor: colors.sky + '20', tension: 0.3, fill: false, borderWidth: 2},
+                {label: "Stack Data", data: [2.0, 2.5, 1.0], borderColor: colors.sage2, backgroundColor: colors.sage2 + '20', tension: 0.3, fill: false, borderWidth: 2}
             ]},
             options: chartOptions
         });
